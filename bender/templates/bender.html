@@ -1,0 +1,152 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Check Your Bending</title>
+	<style type="text/css">
+		*{
+			padding: 0;
+			margin:0;
+			font-family: sans-serif;
+		}
+		.container {
+			width: 94%;
+			margin: auto;
+		}
+		.header{
+			display: flex;
+			background-color: rgba(0,0,0,0.45);
+			height: 10vh;
+			align-items: center;
+		}
+		.f {
+			display: flex;
+			align-items: center;
+		}
+		.logo p {
+			letter-spacing: 5px;
+			font-weight: 600;
+			margin-right: 20px;
+		}
+		.header li {
+			list-style: none;
+		}
+		.header li a{
+			color: black;
+			text-decoration: none;
+		}
+		.header li a:hover{
+			color: wheat;
+		}
+		
+		input{
+			padding: 8px 10px;
+			width: 287px;
+			margin: 10px 0px;
+			border: 1px solid #ccc;
+		}	
+		.p{
+			position: absolute;
+			transform: translate(-50%, -50%);
+			top: 50%;
+			left: 50%;
+			background-color: white;
+			z-index: -1;
+			width: 310px;
+			padding: 15px;
+			box-shadow: 1px 1px 13px 3px rgba(0,0,0,0.45);
+
+		}
+		.success {
+			z-index: 1;
+			box-shadow: 1px 1px 13px 3px rgba(0,0,0,0.45);
+			width: 340px;
+			position: absolute;
+			transform: translate(-50%, -50%);
+			background-color: white;
+			top: 50%;
+			text-align: center;
+			padding: 20px;
+			color: green;
+			left: 50%;
+			font-size: 15px;
+		}
+		.success p {
+			margin-bottom: 10px;
+			color: green;
+			line-height: 1.4rem;
+		}
+		.success img {
+			width: 100%;
+			/*width: 300px;*/
+		}
+		form span {
+			display: none;
+		}
+		button {
+			margin-top: 10px;
+			padding: 9px 17px;
+			background-color: rgba(0,0,0,0.45);
+			border: none;
+			color: white;
+			border-radius: 3px;
+		}
+		@media only screen and (max-width: 380px) {
+			.p {
+				width: 270px;
+			}
+			input {
+				width: 247px;
+			}
+		}
+	</style>
+</head>
+<body>
+
+	<div class="header">
+		<div class="container">
+			<div class="f">
+				<div class="logo">
+					<p>BENDERS</p>
+				</div>
+				<ul>
+					<li><a href="{% url 'home' %}">Home</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	{% if message %}
+		<div class="success">
+			<p>{{message}}</p>
+			<img src="../images/{{video.video}}">
+			<a href="{% url 'home' %}"><button>Cancel</button></a>
+		</div>
+	{% endif %}
+		<div class="p">
+			{% if messages %}
+			{% for m in messages %}
+			<p class="error" style="color: red; margin-bottom: 5px;">{{m}}</p>
+			{% endfor %}
+			{% endif %}
+			<div class="text">
+				<h2 style="text-align: center;">NOTE:</h2>
+				<p style="color: red;margin-bottom: 10px;; font-size: 15px;"><br> Fill up the input before click the submit</p>
+			</div>
+			<form method="POST" enctype="multipart/form-data">
+				{% csrf_token %}
+				{{form.as_p}}
+				<button id="but" onclick="clicking()">Submit</button>
+				<span id="spa">Verifying....</span>
+			</form>
+		</div>
+<script type="text/javascript">
+	alert('You can only Try This Once With Your Name, Enter Your Correct Names. Please Dont Spoil The Fun')
+	function clicking() {
+		document.getElementById('but').style.display = 'none'
+		document.getElementById('spa').style.display = 'block'
+	}
+</script>
+</body>
+</html>
