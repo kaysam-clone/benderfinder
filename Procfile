@@ -1,0 +1,1 @@
+web: gunicorn crm1.wgsi --log-file -
